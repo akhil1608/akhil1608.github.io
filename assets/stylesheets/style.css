@@ -1,8 +1,15 @@
 .dark {
-    background-color: #1e2019;
-    color: #fffce8;
+    background-color: #00120b;
+    color: #fbf2c0;
 }
 .light {
-    background-color: #fffce8;
-    color: #1e2019;
+    background-color: #fbf2c0;;
+    color: #c06e52;
+}
+.headshot {
+    top: 20%;
+    left: 10%;
+}
+.home {
+    font-family: 'Source Code Pro', monospace;
 }
