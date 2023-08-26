@@ -3,52 +3,44 @@
 	<head>
 		<title>Akhil Pillai</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link href="assets/stylesheets/style.css" rel="stylesheet" />
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+		<link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico">
+		<link rel="stylesheet" href="assets/stylesheets/style.css"  />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+		<script type="module" src="./assets/scripts/app.js"></script>
 	</head>
-	<body class="home">
-		<div class="container-fluid min-vh-100 d-flex flex-column bg-dark">
-			<div class="row flex-grow-1">
-				<!--
-				<div class="row">
-					<div class="col-6 mx-auto m-3">
-						<input type="text" class="form-control bg-transparent text-white" placeholder="what do you want to know about me?"/>
-					</div>
-				</div>
-				-->
-				<div class="row flex-grow-1">
-					<div class="d-flex flex-column justify-content-center align-items-center">
-						<div class="m-3 col-6 text-center">
-							<div>
-								<img class="img-fluid rounded-circle" src="assets/images/headshot.jpeg" />
-							</div>
-							<div>
+	<body class="home" id="app" v-cloak>
+		<div class="container-fluid min-vh-100 d-flex flex-column bg-dark position-absolute">
+			<transition name="fade" mode="out-in">
+				<!-- main page -->
+				<div class="row flex-grow-1" id="main-page" v-if="isMainActive">
+					<div class="row flex-grow-1">
+						<div class="d-flex flex-column justify-content-center align-items-center">
+							<div class="m-3 col-6 text-center">
+								<head-shot></head-shot>
 								<h1 class="display-1 fw-bold text-white">akhil pillai.</h1>
 								<p class="text-warning">storyteller. living life one line of code at a time.</p>
-								<button class="btn btn-sm btn-outline-light">projects</button>
-								<button class="btn btn-sm btn-outline-light">football</button>
-								<button class="btn btn-sm btn-outline-light">photogrpahy</button>
-								<button class="btn btn-sm btn-outline-light">blog</button>
+								<section-button v-for="section in sections" :name="section" @click="sectionClicked(section)"></section-button>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+				<!-- sections -->
+				<div class="row flex-grow-1" id="section-page" v-else>
+					<section-page :active="active">
+						<template v-slot:main>
+							<head-shot-small @click="sectionClicked()"></head-shot-small>
+						</template>
+						<template v-slot:content>
+							<input type="text" class="form-control mb-3 bg-transparent text-white" placeholder="filter projects" v-model="projectSearch" />
+							<project-item v-for="project in filteredProjects" :project="project"></project-item>
+						</template>
+					</section-page>
+				</div>
+			</transition>
 		</div>
 	</body>
-	<!--
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
-	<script>
-		repos = fetch("https://api.github.com/users/akhil1608/repos", {
-			method: "GET",
-			headers: {
-				"Content-type": "application/json; charset=UTF-8"
-			}
-		}).then((response) => response.json());
-	</script>
-	!-->
 </html>
