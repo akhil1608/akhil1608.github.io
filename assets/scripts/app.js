@@ -6,7 +6,7 @@ const app = createApp({
 		return {
 			active: "main",
 			projectSearch: "",
-			sections: ["projects"]
+			sections: ["Projects"]
 		}
 	},
 	async created() {
@@ -25,7 +25,8 @@ const app = createApp({
 			return "filter " + this.active;
 		},
 		filteredProjects() {
-			return this.projects.filter(x => x.name.includes(this.projectSearch));
+			console.log(this.filteredProjects);
+			return this.projects.filter(x => !x.name.startsWith("_")).filter(x => x.name.includes(this.projectSearch));
 		}
 	}
 });
@@ -43,6 +44,14 @@ function getRepos() {
 			"Content-type": "application/json; charset=UTF-8"
 		}
 	})
-	.then((response) => (response.json()))
-	.then((repos) => (repos.map((item) => ({name: item.name, language: item.language}))));
+	.then(response => response.json())
+	.then(repos => repos.map(item => ({
+		"name": item.name, 
+		"language": item.language, 
+		"description": item.description,
+		"href": item.html_url, 
+		"ex": item
+	})))
+	.then(repos => repos.filter(item => !item.name.startsWith("_")))
+	.then(repos => repos.filter(item => item.name != "akhil1608.github.io"));
 }

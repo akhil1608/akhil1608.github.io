@@ -13,11 +13,11 @@ const ProjectItem = {
         project: {}
     },
     template: `
-    <div class="card w-25 float-start m-0 text-white bg-dark border-white">
-        <div class="card-body">
-            <h3 class="card-title">{{ project.name }}</h3>
-            <p class="card-text">{{ project.language }}</p>
-        </div>
+    <div class="w-100 mx-auto d-inline m-2 text-white bg-dark border-white">
+        <h4 class="mb-2 text-truncate"><a class="text-white text-decoration-none" :href="project.href">{{ project.name }}</a></h4>
+        <h6 class="text-muted text-truncate">{{ project.description == null ? "No Description" : project.description }}</h6>
+        <h6 class="text-muted">{{ project.language == null ? "NA" : project.language }}</h6>
+        <hr />
     </div>
     `
 };
@@ -26,7 +26,7 @@ const SectionPage = {
     template: `
     <div class="row flex-grow-1">
         <div class="d-flex flex-column align-items-center">
-            <div class="m-3 mt-5 col-9 text-center">
+            <div class="m-3 mt-5 col-9">
                 <div class="display-6" style="--bs-breadcrumb-divider: '>';">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><slot name="main"></slot></li>
@@ -36,6 +36,7 @@ const SectionPage = {
                 <hr class="bg-danger border-4 border-top border-warning" />
                 <!-- section content -->
                 <slot name="content"></slot>
+                <slot name="footer"></slot>
             </div>
         </div>
     </div>
